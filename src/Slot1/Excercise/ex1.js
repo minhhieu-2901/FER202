@@ -1,240 +1,227 @@
-function Ex1() {
+import React, { useEffect, useState } from "react";
+{/*Đây là bài 4 */}
+class Shape {
+  constructor(color) {
+    this.color = color;
+  }
+}
+
+class Rectangle extends Shape {
+  constructor(color, length, width) {
+    super(color);
+    this.length = length;
+    this.width = width;
+  }
+}
+
+class Triangle extends Shape {
+  constructor(color, base, height) {
+    super(color);
+    this.base = base;
+    this.height = height;
+  }
+}
+
+const getRandomNumber = () =>
+  new Promise((resolve, reject) => {
+    const number = Math.floor(Math.random() * 10) + 1;
+
+    if (number > 5) {
+      resolve(number);
+    } else {
+      reject(new Error("Error"));
+    }
+  });
+
+const Ex1 = () => {
+  const [promiseResult, setPromiseResult] = useState("Loading...");
+
+  useEffect(() => {
+    getRandomNumber()
+      .then((number) => setPromiseResult(`Random number: ${number}`))
+      .catch((error) => setPromiseResult(error.message));
+  }, []);
+
+  var people = [
+    { name: "Jack", age: 50 },
+    { name: "Michael", age: 9 },
+    { name: "John", age: 40 },
+    { name: "Ann", age: 19 },
+    { name: "Elisabeth", age: 16 },
+  ];
+
+  const isTeenager = (person) => person.age >= 10 && person.age <= 20;
+  const firstTeenager = people.find(isTeenager);
+  const teenagers = people.filter(isTeenager);
+  const areAllTeenagers = people.every(isTeenager);
+  const hasTeenager = people.some(isTeenager);
+
+  var array = [1, 2, 3, 4];
+  const sum = array.reduce((total, number) => total + number, 0);
+  const product = array.reduce((result, number) => result * number, 1);
+
+  const companies = [
+    { name: "Company One", category: "Finance", start: 1981, end: 2004 },
+    { name: "Company Two", category: "Retail", start: 1992, end: 2008 },
+    { name: "Company Three", category: "Auto", start: 1999, end: 2007 },
+    { name: "Company Four", category: "Retail", start: 1989, end: 2010 },
+    { name: "Company Five", category: "Technology", start: 2009, end: 2014 },
+    { name: "Company Six", category: "Finance", start: 1987, end: 2010 },
+    { name: "Company Seven", category: "Auto", start: 1986, end: 1996 },
+    { name: "Company Eight", category: "Technology", start: 2011, end: 2016 },
+    { name: "Company Nine", category: "Retail", start: 1981, end: 1989 },
+  ];
+
+  const ages = [33, 12, 20, 16, 5, 54, 21, 44, 61, 13, 15, 45, 25, 64, 32];
+
+  const person = {
+    name: "Costas",
+    address: {
+      street: "Lalaland 12",
+    },
+  };
+
+  companies.forEach((company) => console.log(company.name));
+
+  const companiesStartedAfter1987 = companies.filter(
+    (company) => company.start > 1987,
+  );
+  companiesStartedAfter1987.forEach((company) => console.log(company.name));
+
+  const retail = companies
+    .filter((company) => company.category === "Retail")
+    .map((company) => ({ ...company, start: company.start + 1 }));
+
+  const addArgumentsToArray = (...argumentsList) =>
+    argumentsList.reduce(
+      (result, argument) =>
+        Array.isArray(argument)
+          ? [...result, ...argument]
+          : [...result, argument],
+      [],
+    );
+  const argumentsArray = addArgumentsToArray(1, "two", [3, 4], true);
+
+  const { street } = person.address;
+
+  const createCounter = () => {
+    let count = 0;
+    return () => count++;
+  };
+  const counter = createCounter();
+  const counterResults = [counter(), counter(), counter()];
+
+  const getQueryParameters = (url) =>
+    Object.fromEntries(new URL(url).searchParams.entries());
+  const queryParameters = getQueryParameters(
+    "https://example.com?name=John&age=25",
+  );
+
   return (
-    <div className="container mt-5">
-      <h1 style={{ textAlign: "center" }}>EX1</h1>
-      <div className="bg-body-secondary p-5 mb-4">
-        <h2>Let's test the grid!</h2>
-      </div>
+    <div style={{ marginLeft: "20px" }}>
+      <h1 style={{ textAlign: "center" }}>Bài tập JSX</h1>
+      <h2>Ex1</h2>
+      <p>
+        First teenager: {firstTeenager.name} {firstTeenager.age}
+      </p>
+      <p>All teenagers: {teenagers.map((person) => person.name).join(", ")}</p>
+      <p>Every person is a teenager: {areAllTeenagers.toString()}</p>
+      <p>There is a teenager: {hasTeenager.toString()}</p>
 
-      <div className="row">
-        <div className="col-6 border bg-body-secondary p-2">First col</div>
+      <h2>Ex2</h2>
+      <p>Sum: {sum}</p>
+      <p>Product: {product}</p>
 
-        <div className="col-6 border bg-body-secondary p-2">Second col</div>
-      </div>
+      <h2>Companies</h2>
+      <h3>All company names</h3>
+      {companies.map((company) => (
+        <p key={company.name}>{company.name}</p>
+      ))}
 
-      <div className="row">
-        <div className="col-4 border bg-body-secondary p-2">col</div>
+      <h3>Companies started after 1987</h3>
+      {companiesStartedAfter1987.map((company) => (
+        <p key={company.name}>{company.name}</p>
+      ))}
 
-        <div className="col-4 border bg-body-secondary p-2">col</div>
-
-        <div className="col-4 border bg-body-secondary p-2">col</div>
-      </div>
-
-      <div className="row">
-        <div className="col-3 border bg-body-secondary p-2">col</div>
-
-        <div className="col-3 border bg-body-secondary p-2">col</div>
-
-        <div className="col-3 border bg-body-secondary p-2">col</div>
-
-        <div className="col-3 border bg-body-secondary p-2">col</div>
-      </div>
-      <br />
-      <br />
-      <h1 style={{ textAlign: "center" }}>EX2</h1>
-
-      <div className="container mt-2">
-        <div className="bg-body-secondary text-center p-5 mb-4">
-          <h2>My First Bootstrap Page</h2>
+      <h3>Retail companies</h3>
+      {retail.map((company) => (
+        <div key={company.name}>
+          <p>
+            <strong>Name: {company.name}</strong>
+          </p>
+          <p>Category: {company.category}</p>
+          <p>Start: {company.start}</p>
+          <p>End: {company.end}</p>
         </div>
+      ))}
 
-        <div className="row text-center">
-          <div className="col-4">
-            <img src="/images/html.png" alt="HTML" width="180" />
+      <h3>Companies sorted by end date</h3>
+      {[...companies]
+        .sort((companyA, companyB) => companyA.end - companyB.end)
+        .map((company) => (
+          <div key={company.name}>
+            <p>
+              Name: {company.name} {company.end}
+            </p>
           </div>
+        ))}
 
-          <div className="col-4">
-            <img src="/images/css.png" alt="CSS" width="180" />
-          </div>
+      <h3>Ages sorted in descending order</h3>
+      {[...ages]
+        .sort((ageA, ageB) => ageB - ageA)
+        .map((age) => (
+          <p key={age}>{age}</p>
+        ))}
 
-          <div className="col-4">
-            <img src="/images/bootstrap.png" alt="Bootstrap" width="180" />
-          </div>
-        </div>
-      </div>
+      <h3>Sum of all ages</h3>
+      <p>{ages.reduce((total, age) => total + age, 0)}</p>
 
-      <br />
-      <br />
-      <h1 style={{ textAlign: "center" }}>EX3</h1>
-
-      <div className="container mt-4">
-        <div className="bg-body-secondary p-5 mb-4">
-          <h2>Let's test the grid!</h2>
-        </div>
-
-        <ul className="nav mb-4">
-          <li className="nav-item">
-            <a className="nav-link active" href="#">
-              Active
-            </a>
-          </li>
-
-          <li className="nav-item">
-            <a className="nav-link" href="#">
-              Link
-            </a>
-          </li>
-
-          <li className="nav-item">
-            <a className="nav-link" href="#">
-              Link
-            </a>
-          </li>
-
-          <li className="nav-item">
-            <a className="nav-link disabled" href="#">
-              Disabled
-            </a>
-          </li>
-        </ul>
-
-        <div className="row">
-          <div className="col-6 border bg-body-secondary p-2">First col</div>
-
-          <div className="col-6 border bg-body-secondary p-2">Second col</div>
-        </div>
-
-        <div className="row">
-          <div className="col-4 border bg-body-secondary p-2">col</div>
-
-          <div className="col-4 border bg-body-secondary p-2">col</div>
-
-          <div className="col-4 border bg-body-secondary p-2">col</div>
-        </div>
-
-        <div className="row">
-          <div className="col-3 border bg-body-secondary p-2">col</div>
-
-          <div className="col-3 border bg-body-secondary p-2">col</div>
-
-          <div className="col-3 border bg-body-secondary p-2">col</div>
-
-          <div className="col-3 border bg-body-secondary p-2">col</div>
-        </div>
-      </div>
-
-      <br />
-      <br />
-      <h1 style={{ textAlign: "center" }}>EX4</h1>
-
-      <div className="container mt-3">
-        <header className="text-center bg-warning p-2">
-          <img
-            src="/images/fpt.png"
-            alt="FPT University"
-            width="320"
-            className="bg-white"
-          />
-
+      <h3>Company object created with destructuring</h3>
+      {(() => {
+        const { name, category } = companies[0];
+        const company = {
+          name,
+          category,
+          print() {
+            console.log(this.name);
+          },
+        };
+        company.print();
+        return (
           <div>
-            <a href="#" className="text-white text-decoration-none mx-1">
-              Home
-            </a>
-
-            <a href="#about" className="text-white text-decoration-none mx-1">
-              About
-            </a>
-
-            <a href="#contact" className="text-white text-decoration-none mx-1">
-              Contact
-            </a>
+            <p>Name: {company.name}</p>
+            <p>Category: {company.category}</p>
           </div>
-        </header>
+        );
+      })()}
 
-        <section className="text-center my-4">
-          <h5 className="fw-bold">About</h5>
-          <p>This is the about section of the website.</p>
-        </section>
+      <h3>Sum of any number of arguments</h3>
+      <p>
+        {((...numbers) => numbers.reduce((total, number) => total + number, 0))(
+          1,
+          2,
+          3,
+          4,
+          5,
+        )}
+      </p>
 
-        <section className="text-center my-4">
-          <h5 className="fw-bold">Contact</h5>
-          <p>For any inquiries, please contact us at example@example.com.</p>
-        </section>
+      <h3>Arguments added to an array</h3>
+      <p>{JSON.stringify(argumentsArray)}</p>
 
-        <footer className="text-center bg-warning text-white p-3">
-          © 2023 Website. All rights reserved.
-        </footer>
-      </div>
+      <h3>Street from person</h3>
+      <p>{street}</p>
 
-      <br />
-      <br />
-      <h1 style={{ textAlign: "center" }}>EX5</h1>
+      <h3>Incrementing counter</h3>
+      <p>{counterResults.join(", ")}</p>
 
-      <div className="text-center bg-warning p-3">
-        <img src="/images/fpt.png" alt="FPT" width="150" />
+      <h3>Query parameters</h3>
+      <p>{JSON.stringify(queryParameters)}</p>
 
-        <div>
-          <a href="#" className="text-white mx-1">
-            Home
-          </a>
-
-          <a href="#" className="text-white mx-1">
-            About
-          </a>
-
-          <a href="#" className="text-white mx-1">
-            Contact
-          </a>
-        </div>
-      </div>
-
-      <h4 className="text-center mt-4">Images Detail</h4>
-
-      <div className="row">
-        <div className="col-6">
-          <div className="card">
-            <img src="/images/html.png" className="card-img-top" alt="HTML" />
-
-            <div className="card-body text-center">
-              <h5>HTML</h5>
-              <p>HTML is used to create the structure of a website.</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="col-6">
-          <div className="card">
-            <img src="/images/css.png" className="card-img-top" alt="CSS" />
-
-            <div className="card-body text-center">
-              <h5>CSS</h5>
-              <p>CSS is used to style a website.</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="col-6 mt-3">
-          <div className="card">
-            <img
-              src="/images/bootstrap.png"
-              className="card-img-top"
-              alt="Bootstrap"
-            />
-
-            <div className="card-body text-center">
-              <h5>Bootstrap</h5>
-              <p>Bootstrap is a CSS framework.</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="col-6 mt-3">
-          <div className="card">
-            <img src="/images/fpt.png" className="card-img-top" alt="FPT" />
-
-            <div className="card-body text-center">
-              <h5>FPT University</h5>
-              <p>FPT University</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <footer className="bg-warning text-center p-4 mt-4">
-        © Copyright 2023
-      </footer>
+      <h2>Promise</h2>
+      <p>{promiseResult}</p>
     </div>
   );
-}
+};
 
 export default Ex1;

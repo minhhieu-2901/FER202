@@ -4,8 +4,9 @@ function ES6() {
       this.name = name;
       this.age = age;
     }
+
     introduce() {
-      console.log(`EX1: Name: ${this.name}, Age: ${this.age}`);
+      return `EX1: Name: ${this.name}, Age: ${this.age}`;
     }
   }
 
@@ -16,55 +17,56 @@ function ES6() {
     }
 
     avgScore() {
-      const total = this.scores.reduce((sum, scores) => (sum += scores), 0);
+      const total = this.scores.reduce((sum, scores) => sum + scores, 0);
       return total / this.scores.length;
     }
 
     inforStudent() {
-      console.log(
-        `Ex2: Name: ${this.name}, Age: ${this.age}, Average Score: ${this.avgScore()} `,
-      );
+      return `Ex2: Name: ${this.name}, Age: ${this.age}, Average Score: ${this.avgScore()}`;
     }
   }
 
   const person = new Students("Hieu", 21, [8, 9, 10]);
-  person.introduce();
-  person.inforStudent();
 
   function createScores(...scores) {
     return scores;
   }
 
   const scores = createScores(8, 9, 10);
-  console.log(`Ex3:Score ${scores}`);
 
   const { name, age } = person;
-  console.log(`Ex4: Name: ${name}, Age:${age}`);
 
   const newScore = [4, 7, 8];
   person.scores = [...person.scores, ...newScore];
-  console.log(`Ex5: New score after add: ${person.scores}`);
 
-  console.log("Ex6:");
   const pass = person.scores.filter((scores) => scores >= 5);
-  console.log(`Pass scores: ${pass}`);
-  const total = person.scores.reduce((sum, score) => (sum += score), 0);
-  console.log(`Total: ${total}`);
+  const total = person.scores.reduce((sum, score) => sum + score, 0);
 
-  const evaluate = (person) => {
-    return new Promise((resolve, reject) => {
-      if (person.avgScore >= 7) resolve("Excellent");
-      else reject("Need to improve");
-    });
-  };
+  return (
+    <div style={{ marginLeft: "20px" }}>
+      <h1 style={{ textAlign: "center" }}>Bài tập ES6</h1>
+      <h2>Ex1</h2>
+      <p>{person.introduce()}</p>
 
-  evaluate(person.avgScore())
-    .then((result) => {
-      console.log(result);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+      <h2>Ex2</h2>
+      <p>{person.inforStudent()}</p>
+
+      <h2>Ex3</h2>
+      <p>Score: {scores.join(", ")}</p>
+
+      <h2>Ex4</h2>
+      <p>
+        Name: {name}, Age: {age}
+      </p>
+
+      <h2>Ex5</h2>
+      <p>New score after add: {person.scores.join(", ")}</p>
+
+      <h2>Ex6</h2>
+      <p>Pass scores: {pass.join(", ")}</p>
+      <p>Total: {total}</p>
+    </div>
+  );
 }
 
 export default ES6;
