@@ -17,17 +17,22 @@ function ES6() {
     }
 
     avgScore() {
+      if (this.scores.length === 0) {
+        return 0;
+      }
       const total = this.scores.reduce((sum, scores) => sum + scores, 0);
-      return total / this.scores.length;
+      return (total / this.scores.length).toFixed(2);
     }
 
     inforStudent() {
-      return `Ex2: Name: ${this.name}, Age: ${this.age}, Average Score: ${this.avgScore()}`;
+      return `Ex2: ${this.introduce()}, Average Score: ${this.avgScore()}`;
     }
   }
 
   const person = new Students("Hieu", 21, [8, 9, 10]);
 
+
+  //rest parameter
   function createScores(...scores) {
     return scores;
   }
